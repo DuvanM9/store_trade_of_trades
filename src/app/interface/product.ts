@@ -13,5 +13,5 @@ export interface IProductUpdated {
     price?: number;
     shipping_price?: number;
     img?: string;
-  }
+}
   

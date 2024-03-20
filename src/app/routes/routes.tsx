@@ -1,21 +1,12 @@
-import { LazyExoticComponent } from "react";
-import { PageCustomerService, PageListProducts, PageMayOrder, PageOffersOfTheDay } from "../pages";
-
-type JSXComponent = () => JSX.Element;
-
-export interface IRoute {
-  to: string;
-  path: string;
-  Component: LazyExoticComponent<JSXComponent> | JSXComponent;
-  name: string;
-  rol: Rol[];
-}
-
-enum Rol {
-  ADMIN,
-  SUPER_USER,
-  USER,
-}
+import {
+  PageCustomerService,
+  PageListProducts,
+  PageMayOrder,
+  PageOffersOfTheDay,
+} from "../pages";
+import { CardDetailProduct } from "../components/Products/CardDetailProduct";
+import { IRoute } from "../interface/route";
+import { Rol } from "../enum/rol";
 
 export const routes: IRoute[] = [
   {
@@ -23,28 +14,40 @@ export const routes: IRoute[] = [
     path: "my-orders",
     Component: PageMayOrder,
     name: "Mis pedidos",
-    rol: [Rol.ADMIN, Rol.USER],
+    isActiveNav: true,
+    rol: [Rol.USER, Rol.SERVICE_PROVIDER, Rol.TRADE],
   },
   {
     to: "customer-service",
     path: "customer-service",
     Component: PageCustomerService,
     name: "Servicio al cliente",
-    rol: [Rol.ADMIN, Rol.USER],
+    isActiveNav: true,
+    rol: [Rol.USER, Rol.SERVICE_PROVIDER, Rol.TRADE],
   },
   {
     to: "offer-of-the-day",
     path: "offer-of-the-day",
     Component: PageOffersOfTheDay,
     name: "Ofertas del día",
-    rol: [Rol.ADMIN, Rol.USER],
+    isActiveNav: true,
+    rol: [Rol.USER, Rol.SERVICE_PROVIDER, Rol.TRADE],
   },
   {
     to: "product-list",
     path: "product-list",
     Component: PageListProducts,
     name: "Productos",
-    rol: [Rol.ADMIN, Rol.USER],
+    isActiveNav: true,
+    rol: [Rol.USER, Rol.SERVICE_PROVIDER, Rol.TRADE],
+  },
+  {
+    to: "product-detail",
+    path: "product-detail/:product",
+    isActiveNav: false,
+    Component: CardDetailProduct,
+    name: "Detail",
+    rol: [Rol.USER, Rol.SERVICE_PROVIDER, Rol.TRADE],
   },
 ];
 

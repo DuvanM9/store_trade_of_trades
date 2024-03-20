@@ -125,12 +125,65 @@ code {
 
 /* Estilos para el texto "Costo de envío" */
 .shipping-cost-label {
-  font-size: 15px; /* Tamaño de fuente */
-  line-height: 5px;
+  text-align: justify;
+  font-size: 16px; /* Tamaño de fuente */
+  line-height: 4px;
 }
 
 /* Estilos para el precio del envío */
 .shipping-cost {
   font-size: 18px; /* Tamaño de fuente */
   font-weight: bold; /* Negrita */
+}
+
+.register-layout{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-step{
+  background-color: #24566b;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  color: #d8f3ff;
+  font-weight: bold;
+}
+
+.step-active .custom-step {
+  background-color: #4ea7cd; /* Cambia el color de fondo cuando está activo */
+  /* box-shadow: 0 0 10px rgba(18, 88, 110, 0.5); Resaltado con sombra cuando está activo */
+  box-shadow: 0px 5px 5px rgb(0, 0, 0); /* Desplazamiento vertical de 5px para la sombra hacia abajo */
+  transition: all 0.3s ease-out !important;
+}
+
+
+.image-welcome {
+  background-color: #0393ae;
+  border-top-left-radius: 13px; /* Radio de borde solo en la esquina derecha superior */
+  border-bottom-left-radius: 13px; /* Radio de borde solo en la esquina derecha inferior */
+}
+
+.shadow-down{
+  position: absolute;
+  top: 75%;
+  transform: rotate(-4deg);
+  right: 63%;
+  width: 20%;
+  height: 4rem;
+  border-radius: 50%;
+  box-shadow: 0px 6px 6px rgb(0, 0, 0); /* Desplazamiento vertical de 5px para la sombra hacia abajo */
+}
+
+.forms-steps{
+  background-color: #3a404b;
+  border-top-right-radius: 13px; /* Radio de borde solo en la esquina derecha superior */
+  border-bottom-right-radius: 13px; /* Radio de borde solo en la esquina derecha inferior */
 }

@@ -6,8 +6,9 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { CreateRoutesByRol, IRoute, routes } from "./routes";
+import { CreateRoutesByRol, routes } from "./routes";
 import { Carousel, Footer, Header } from "../layout";
+import { IRoute } from "../interface/route";
 
 export const NavigationApp = () => {
   return (
@@ -21,14 +22,18 @@ export const NavigationApp = () => {
           {/* Menu */}
           <nav className="nav">
             <ul>
-              {CreateRoutesByRol(0).map(({ to, name }: IRoute) => (
+              {CreateRoutesByRol(0).map(({ to, name, isActiveNav }: IRoute) => (
                 <li key={to}>
-                  <NavLink
-                    to={to}
-                    className={({ isActive }) => (isActive ? "nav-active" : "")}
-                  >
-                    {name}
-                  </NavLink>
+                  {isActiveNav && (
+                    <NavLink
+                      to={to}
+                      className={({ isActive }) =>
+                        isActive ? "nav-active" : ""
+                      }
+                    >
+                      {name}
+                    </NavLink>
+                  )}
                 </li>
               ))}
             </ul>
