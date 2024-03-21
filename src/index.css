@@ -187,3 +187,32 @@ code {
   border-top-right-radius: 13px; /* Radio de borde solo en la esquina derecha superior */
   border-bottom-right-radius: 13px; /* Radio de borde solo en la esquina derecha inferior */
 }
+
+.box-skils {
+  background-color: #0393ae;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.box-skils span {
+  height: auto;
+  background-color: #24566b;  
+}
+
+.icon-button {
+  color: white;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer; /* Asegura que el cursor sea de tipo puntero */
+  outline: none; /* Elimina el borde del botón al enfocarlo */
+}
+
+.icon-button:hover {
+  cursor: pointer;
+  color: white
+}

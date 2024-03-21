@@ -4,7 +4,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { CreateRoutesByRol, routes } from "./routes_register";
 import { IRoute } from "../interface/route";
 import { Stepper } from "../components/General/Stepper";
-import { Rol } from "../enum/rol";
 import { useSelector } from "react-redux";
 import { IStore } from "../interface/store";
 

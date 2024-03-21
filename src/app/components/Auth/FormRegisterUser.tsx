@@ -5,7 +5,7 @@ import { Rol } from "../../enum/rol";
 import { useFormRegisterUser } from "../../hooks/useFormRegisterUser";
 
 export const FormRegisterUser = () => {
-  const { savePartialData, initialState, keyReconstructFragment } =
+  const { savePartialDataStepOne, initialStateBasicData, keyReconstructFragment } =
     useFormRegisterUser();
   return (
     <React.Fragment key={keyReconstructFragment}>
@@ -14,11 +14,12 @@ export const FormRegisterUser = () => {
           <h3>Datos de autenticación</h3>
         </div>
         <Formik
-          initialValues={initialState}
+          initialValues={initialStateBasicData}
           validationSchema={createUserSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             setSubmitting(false);
-            savePartialData(values);
+            savePartialDataStepOne(values);
+            resetForm()
           }}
         >
           {({

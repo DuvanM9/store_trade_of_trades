@@ -1,8 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IUserDataBasic } from "../../interface/register";
+import { IProviderServiceData, IUserDataBasic } from "../../interface/register";
 
 export interface IDataRegister {
   stepDataBasic: IUserDataBasic;
+  stepDataProviderServive: IProviderServiceData
 }
 
 const initialState: IDataRegister = {
@@ -12,6 +13,12 @@ const initialState: IDataRegister = {
     passwordConfirm: "",
     rol: 3,
   },
+  stepDataProviderServive: {
+    typeService: "0",
+    experience: "",
+    skills: [],
+    billing_model: "",
+  }
 };
 
 export const dataRegisterSlice = createSlice({
@@ -21,8 +28,11 @@ export const dataRegisterSlice = createSlice({
     setDataBasicStepOne: (state, action: PayloadAction<IUserDataBasic>) => {
       state.stepDataBasic = action.payload;
     },
+    setDataProviderServiceStepTow: (state, action: PayloadAction<IProviderServiceData>) => {
+      state.stepDataProviderServive = action.payload;
+    },
   },
 });
 
-export const { setDataBasicStepOne } = dataRegisterSlice.actions;
+export const { setDataBasicStepOne, setDataProviderServiceStepTow} = dataRegisterSlice.actions;
 export default dataRegisterSlice.reducer;
