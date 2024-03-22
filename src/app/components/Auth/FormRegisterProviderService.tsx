@@ -118,7 +118,7 @@ export const FormRegisterProviderService = () => {
                 </div>
               </div>
               <div className="mb-3 col-md-8 col-lg-6 mx-auto">
-                <label className="form-label">Tus experiencias</label>
+                <label className="form-label">Tu perfil</label>
                 <textarea
                   className={`form-control ${
                     errors.experience && touched.experience && errors.experience
@@ -184,7 +184,7 @@ export const FormRegisterProviderService = () => {
                   <div className="col-8">
                     <input
                       className="form-control"
-                      placeholder="Escribe una aptitud"
+                      placeholder="ejemplo estuco, rapidez node js"
                       value={newSkill}
                       onChange={(e) => {
                         setNewSkill(e.target.value);
