@@ -3,14 +3,12 @@ import { useFormRegisterUser } from "../../hooks/useFormRegisterUser";
 import createNotificationsSchema from "../../validations/createNotificationsUser";
 import React from "react";
 import { notifications } from "../../enum/notification";
-import { Rol } from "../../enum/rol";
 
 export const FormRegisterNotifications = () => {
   const {
     keyReconstructFragment,
     initialStateNotificationsData,
-    saveDataNotifications,
-    initialStateBasicData,
+    saveDataNotifications,  
   } = useFormRegisterUser();
   return (
     <React.Fragment key={keyReconstructFragment}>
@@ -115,9 +113,7 @@ export const FormRegisterNotifications = () => {
                   type="submit"
                   disabled={isSubmitting}
                 >
-                  {Number(initialStateBasicData.rol) === Rol.USER
-                    ? "Finalizar"
-                    : "Siguiente"}
+                  Siguiente
                 </button>
               </div>
             </form>

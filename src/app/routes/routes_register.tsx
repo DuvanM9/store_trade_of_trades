@@ -8,6 +8,7 @@ import {
   FormRegisterTrade,
   FormRegisterUser,
 } from "../components/Auth";
+import { FormRegisterAddress } from "../components/Auth/FormRegisterAddress";
 
 export const routes: IRoute[] = [
   {
@@ -63,6 +64,15 @@ export const routes: IRoute[] = [
     isActiveNav: true,
     icon: <i className="bi bi-bag-fill"></i>,
     rol: [Rol.TRADE],
+  },
+  {
+    to: "address-information",
+    path: "address-information",
+    Component: FormRegisterAddress,
+    name: "Agregar datos de domicilio",
+    isActiveNav: true,
+    icon: <i className="bi bi-pin-map-fill"></i>,
+    rol: [Rol.TRADE, Rol.SERVICE_PROVIDER, Rol.USER],
   },
 ];
 

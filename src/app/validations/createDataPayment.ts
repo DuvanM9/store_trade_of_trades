@@ -58,7 +58,7 @@ const createDataPaymentSchema = Yup.object().shape({
     })
     .required("El número de documento es requerido"),
 
-  bank: Yup.number().required("El banco es requerido"),
+  bank: Yup.string().required("El banco es requerido"),
   account_type: Yup.string().required("El tipo de cuenta es requerido"),
   number_account: Yup.string().required("El número de cuenta es requerida"),
 });

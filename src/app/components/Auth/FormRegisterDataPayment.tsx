@@ -3,7 +3,6 @@ import { useFormRegisterUser } from "../../hooks/useFormRegisterUser";
 import { Formik } from "formik";
 import createDataPaymentSchema from "../../validations/createDataPayment";
 import { typeDocument } from "../../enum/typeDocument";
-import { Rol } from "../../enum/rol";
 
 export const FormRegisterDataPayment = () => {
   const {
@@ -12,7 +11,6 @@ export const FormRegisterDataPayment = () => {
     saveDataPayment,
     listBank,
     listAccountType,
-    initialStateBasicData,
   } = useFormRegisterUser();
   return (
     <React.Fragment key={keyReconstructFragment}>
@@ -150,7 +148,7 @@ export const FormRegisterDataPayment = () => {
                   value={values.bank}
                 >
                   {listBank.map((bank) => (
-                    <option value={bank.id}>{bank.bank}</option>
+                    <option value={bank.ID}>{bank.bank}</option>
                   ))}
                 </select>
                 <div
@@ -182,8 +180,8 @@ export const FormRegisterDataPayment = () => {
                   onBlur={handleBlur}
                   value={values.account_type}
                 >
-                  {listAccountType.map((bank: any) => (
-                    <option value={bank.id}>{bank.bank}</option>
+                  {listAccountType.map((account: any) => (
+                    <option value={account.ID}>{account.account_type}</option>
                   ))}
                 </select>
                 <div
@@ -246,9 +244,7 @@ export const FormRegisterDataPayment = () => {
                   type="submit"
                   disabled={isSubmitting}
                 >
-                  {Number(initialStateBasicData.rol) === Rol.SERVICE_PROVIDER
-                    ? "Finalizar"
-                    : "Siguiente"}
+                  Siguiente
                 </button>
               </div>
             </form>

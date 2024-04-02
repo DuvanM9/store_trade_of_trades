@@ -1,21 +1,15 @@
 import { Suspense, useEffect, useState } from "react";
-import imageFinal from "../assets/Carrito.png"
+import imageFinal from "../assets/Carrito.png";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { CreateRoutesByRol, routes } from "./routes_register";
 import { IRoute } from "../interface/route";
 import { Stepper } from "../components/General/Stepper";
 import { useSelector } from "react-redux";
 import { IStore } from "../interface/store";
+import { useNavRegister } from "../hooks/useNavRegister";
 
 export const NavigationRegister = () => {
-  const { stepDataBasic } = useSelector((state: IStore) => state.data_register);
-  const [dataStep, setdataStep] = useState<IRoute[]>([])
-  
-  useEffect(() => {
-    const stepsByRol = CreateRoutesByRol(Number(stepDataBasic.rol));
-    setdataStep(stepsByRol)
-  }, [stepDataBasic])
-  
+  const { dataStep } = useNavRegister();
 
   return (
     <Suspense fallback={<span>..loanding</span>}>
@@ -28,7 +22,7 @@ export const NavigationRegister = () => {
                 <img
                   src={imageFinal}
                   className="img-fluid"
-                  style={{maxWidth: "100%", maxHeight: "510px"}}
+                  style={{ maxWidth: "100%", maxHeight: "510px" }}
                   alt="..."
                 />
                 {/* <span className="shadow-down"></span> */}

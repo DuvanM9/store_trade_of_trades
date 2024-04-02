@@ -25,10 +25,33 @@ export interface INotificationsData {
 export interface IDataPayment {
   full_name: string;
   type_document: typeDocument;
-  number_document: number;
+  number_document: string;
   bank: string;
   account_type: string;
-  number_account: number;
+  number_account: string;
+}
+
+export interface IDataTrade {
+  name_comerce: string;
+  description_of_comerce:string;
+  category: string;  
+  starting_time: string;
+  clousing_time: string;
+  nit: string;
+  rut: any;
+  verification_code: number;
+}
+
+export interface IDataAddAddress {
+  departament:string;
+  city: string;
+  neighborhood: string;
+  street_type: string;    
+  street: string;
+  number: number;
+  phone_contact: number;
+  apartment_flat?: string;
+  additional_references?: string;
 }
 
 export interface IDataSkils {

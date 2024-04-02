@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import {
+  IDataAddAddress,
   IDataPayment,
   IDataSkils,
+  IDataTrade,
   INotificationsData,
   IProviderServiceData,
   IUserDataBasic,
 } from "../interface/register";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setDataAddress,
   setDataBasicStepOne,
   setDataNotificationsStepThree,
   setDataPaymentStepFour,
   setDataProviderServiceStepTow,
+  setDataTrade,
 } from "../store/features/register-slice";
 import { CreateRoutesByRol } from "../routes/routes_register";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +30,18 @@ export const useFormRegisterUser = () => {
     stepDataProviderServive,
     stepDataNotifications,
     stepDataPayment,
+    stepDataTrade,
+    stepDataAddress,
   } = useSelector((state: IStore) => state.data_register);
+
+  const {
+    ListBanks,
+    ListBillingModels,
+    ListDepartaments,
+    ListStreetTypes,
+    ListTypeAccounts,
+    ListTypeServices,
+  } = useSelector((state: IStore) => state.general);
   const [initialStateBasicData, setInitialStateBasicData] =
     useState<IUserDataBasic>({
       email: "",
@@ -53,18 +68,46 @@ export const useFormRegisterUser = () => {
     useState<IDataPayment>({
       full_name: "",
       type_document: typeDocument.N_R,
-      number_document: 0,
+      number_document: "",
       bank: "0",
       account_type: "0",
-      number_account: 0,
+      number_account: "",
+    });
+
+  const [initialStateDataTrade, setInitialStateDataTrade] =
+    useState<IDataTrade>({
+      name_comerce: "",
+      description_of_comerce: "",
+      category: "",
+      starting_time: "",
+      clousing_time: "",
+      nit: "",
+      rut: "",
+      verification_code: 0,
+    });
+
+  const [initialStateDataAddress, setInitialStateDataAddress] =
+    useState<IDataAddAddress>({
+      departament: "",
+      city: "",
+      neighborhood: "",
+      street_type: "",
+      street: "",
+      number: 0,
+      phone_contact: 0,
+      apartment_flat: "",
+      additional_references: "",
     });
 
   const [listTypeServices, setListTypeServices] = useState<any[]>([]);
   const [listBillingModel, setListBillingModel] = useState<any[]>([]);
   const [listBank, setListBank] = useState<any[]>([]);
   const [listAccountType, setListAccountType] = useState<any>([]);
-
+  const [listDepartament, setListDepartament] = useState<any>([]);
+  const [listCity, setListCity] = useState<any>([]);
+  const [listCategory, setListCategory] = useState<any>([]);
   const [newSkill, setNewSkill] = useState<string>("");
+  const [listStreetType, setListStreetType] = useState<any>([]);
 
   const [keyReconstructFragment, setKeyReconstructFragment] =
     useState<number>(1);
@@ -92,14 +135,25 @@ export const useFormRegisterUser = () => {
     ) {
       navigate(`/payment-data`);
     } else {
-      console.log("Guardar usuario");
+      navigate(`/address-information`);
     }
+  };
+
+  const saveDataTrade = (data: IDataTrade) => {
+    dispatch(setDataTrade(data));
+    const stepsByRol = CreateRoutesByRol(Number(Rol.TRADE));
+    navigate(`/${stepsByRol[2].to}`);
+  };
+
+  const saveDataAddress = (data: IDataAddAddress) => {
+    dispatch(setDataAddress(data));
+    console.log("Guardar datos");
   };
 
   const saveDataPayment = (data: IDataPayment) => {
     dispatch(setDataPaymentStepFour(data));
     if (Number(stepDataBasic.rol) === Rol.SERVICE_PROVIDER) {
-      console.log("Guardar y crear usuario");
+      navigate(`/address-information`);
     } else if (Number(stepDataBasic.rol) === Rol.TRADE) {
       navigate(`/register-product`);
     }
@@ -139,106 +193,50 @@ export const useFormRegisterUser = () => {
   }, [stepDataPayment]);
 
   useEffect(() => {
-    setListTypeServices([
-      {
-        id: "0",
-        service: "Selecciona un tipo de servicio",
-      },
-      {
-        id: "1",
-        service: "ornamentacion",
-      },
-      {
-        id: "2",
-        service: "construccion",
-      },
-      {
-        id: "3",
-        service: "programacion",
-      },
-    ]);
+    setInitialStateDataTrade(stepDataTrade);
+    setKeyReconstructFragment(0);
+  }, [stepDataTrade]);
 
+  useEffect(() => {
+    setInitialStateDataAddress(stepDataAddress);
+    setKeyReconstructFragment(0);
+  }, [stepDataAddress]);
+
+  useEffect(() => {
+    const initSelecion = {
+      ID: "0",
+    };
+    setListBank([{ ID: "0", bank: "Selecciona tu banco" }, ...ListBanks]);
     setListBillingModel([
-      {
-        id: "0",
-        billing_model: "Selecciona modelo de facturacion",
-      },
-      {
-        id: "1",
-        billing_model: "Tarifa por horas",
-      },
-      {
-        id: "2",
-        billing_model: "Tarifa diaria",
-      },
-      {
-        id: "3",
-        billing_model: "Tarifa Mensual",
-      },
-      {
-        id: "4",
-        billing_model: "Tarifa por trabajo realizado",
-      },
+      { ID: "0", bank:  "Selecciona modelo de facturacion" },
+      ...ListBillingModels,
     ]);
-
-    setListBank([
-      {
-        id: 0,
-        bank: "Selecciona tu banco",
-      },
-      {
-        id: 1,
-        bank: "ITAU",
-      },
-      {
-        id: 2,
-        bank: "Bancolombia",
-      },
-      {
-        id: 3,
-        bank: "Davivienda",
-      },
-      {
-        id: 4,
-        bank: "Banco de Bogotá",
-      },
-      {
-        id: 5,
-        bank: "Banco de Occidente",
-      },
-      {
-        id: 6,
-        bank: "Banco Popular",
-      },
-      {
-        id: 7,
-        bank: "Nequi",
-      },
-      {
-        id: 8,
-        bank: "DaviPlata",
-      },
+    setListDepartament([
+      { ID: "0", departament: "Selecciona tu departamento" },
+      ...listDepartament,
     ]);
-
+    setListStreetType([
+      { ID: "0", street_type: "Selecciona tu tipo de calle" },
+      ...ListStreetTypes,
+    ]);
     setListAccountType([
-      {
-        id: 0,
-        bank: "Selecciona tu tipo de cuenta",
-      },
-      {
-        id: 1,
-        bank: "Ahorros",
-      },
-      {
-        id: 2,
-        bank: "Corriente",
-      },
-      {
-        id: 3,
-        bank: "Deposito electronico",
-      },
+      { ID: "0", account_type: "Selecciona tu tipo de cuenta", },
+      ...ListTypeAccounts,
     ]);
+    setListTypeServices([
+      { ID: "0", service: "Selecciona un tipo de servicio", },
+      ...ListTypeServices,
+    ]);
+  }, [
+    ListBanks,
+    ListBillingModels,
+    ListDepartaments,
+    ListStreetTypes,
+    ListTypeAccounts,
+    ListTypeServices,
+  ]);
 
+  useEffect(() => {
     return () => {
       setKeyReconstructFragment(1);
     };
@@ -250,6 +248,8 @@ export const useFormRegisterUser = () => {
     initialStateNotificationsData,
     initialStateDataPayment,
     initialStateProviderServiceData,
+    initialStateDataTrade,
+    initialStateDataAddress,
     savePartialDataStepOne,
     savePartialDataProviderService,
     saveDataNotifications,
@@ -257,10 +257,16 @@ export const useFormRegisterUser = () => {
     setNewSkill,
     removedSkilsProviders,
     saveDataPayment,
+    saveDataTrade,
+    saveDataAddress,
     newSkill,
     listTypeServices,
     listBillingModel,
     listBank,
     listAccountType,
+    listDepartament,
+    listCity,
+    listCategory,
+    listStreetType,
   };
 };
