@@ -5,6 +5,7 @@ export interface IGeneral {
   ListBanks: List[];
   ListTypeAccounts: List[];
   ListStreetTypes: List[];
+  ListCities: List[]
 }
 
 export interface List {
@@ -18,4 +19,5 @@ export interface List {
   street_type?: string;
   account_type?: string;
   service?: string;
+  city?: string;
 }

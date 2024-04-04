@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IGeneral } from "../../interface/general";
+import { IGeneral, List } from "../../interface/general";
 
 const initialState: IGeneral = {
   ListDepartaments: [],
@@ -8,6 +8,7 @@ const initialState: IGeneral = {
   ListBanks: [],
   ListTypeAccounts: [],
   ListStreetTypes: [],
+  ListCities: []
 };
 
 export const generalSlice = createSlice({
@@ -22,8 +23,11 @@ export const generalSlice = createSlice({
       state.ListTypeAccounts = action.payload.ListTypeAccounts;
       state.ListTypeServices = action.payload.ListTypeServices;
     },
+    setCities: (state, action: PayloadAction<List[]>) =>{
+      state.ListCities = action.payload
+    }
   },
 });
 
-export const { setDataGeneral } = generalSlice.actions;
+export const { setDataGeneral, setCities } = generalSlice.actions;
 export default generalSlice.reducer;

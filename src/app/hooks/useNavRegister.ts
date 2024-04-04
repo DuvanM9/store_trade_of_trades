@@ -23,6 +23,7 @@ export const useNavRegister = () => {
           ListStreetTypes: response.data.ListStreetTypes,
           ListTypeServices: response.data.ListTypeServices,
           ListTypeAccounts: response.data.ListTypeAccounts,
+          ListCities: []
         })
       );
     } catch (error) {
@@ -34,6 +35,7 @@ export const useNavRegister = () => {
         ListStreetTypes: [],
         ListTypeServices: [],
         ListTypeAccounts: [],
+        ListCities: []
       });
     }
   };

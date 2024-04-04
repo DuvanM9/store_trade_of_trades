@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import {
   IDataAddAddress,
   IDataPayment,
+  IDataSetDepartament,
   IDataSkils,
   IDataTrade,
   INotificationsData,
   IProviderServiceData,
+  ISaveProviderService,
   IUserDataBasic,
 } from "../interface/register";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +25,10 @@ import { Rol } from "../enum/rol";
 import { IStore } from "../interface/store";
 import { notifications } from "../enum/notification";
 import { typeDocument } from "../enum/typeDocument";
+import { getListCitiesByIdDepartament } from "../services/general";
+import { setCities } from "../store/features/general-slice";
+import Swal from "sweetalert2";
+import { saveProviderService } from "../services/auth";
 
 export const useFormRegisterUser = () => {
   const {
@@ -41,6 +47,7 @@ export const useFormRegisterUser = () => {
     ListStreetTypes,
     ListTypeAccounts,
     ListTypeServices,
+    ListCities,
   } = useSelector((state: IStore) => state.general);
   const [initialStateBasicData, setInitialStateBasicData] =
     useState<IUserDataBasic>({
@@ -93,8 +100,8 @@ export const useFormRegisterUser = () => {
       neighborhood: "",
       street_type: "",
       street: "",
-      number: 0,
-      phone_contact: 0,
+      number: "",
+      phone_contact: "",
       apartment_flat: "",
       additional_references: "",
     });
@@ -145,9 +152,55 @@ export const useFormRegisterUser = () => {
     navigate(`/${stepsByRol[2].to}`);
   };
 
-  const saveDataAddress = (data: IDataAddAddress) => {
+  const saveDataAddress = async (data: IDataAddAddress) => {
     dispatch(setDataAddress(data));
-    console.log("Guardar datos");
+
+    const provider: ISaveProviderService = {
+      email: stepDataBasic.email,
+      password: stepDataBasic.password,
+      rol: stepDataBasic.rol,
+      typeService: stepDataProviderServive.typeService,
+      experience: stepDataProviderServive.experience,
+      skills: stepDataProviderServive.skills,
+      billing_model: stepDataProviderServive.billing_model,
+      type_notifications: stepDataNotifications.type_notifications,
+      media: stepDataNotifications.media,
+      full_name: stepDataPayment.full_name,
+      type_document: stepDataPayment.type_document,
+      number_document: stepDataPayment.number_account,
+      bank: stepDataPayment.bank,
+      account_type: stepDataPayment.account_type,
+      number_account: stepDataPayment.number_account,
+      departament: data.departament,
+      city: data.city,
+      neighborhood: data.neighborhood,
+      street_type: data.street_type,
+      street: data.street,
+      number: parseInt(data.number),
+      phone_contact: data.phone_contact,
+      apartment_flat: data.apartment_flat,
+      additional_references: data.additional_references,
+    };
+
+    try {
+      const res = await saveProviderService(provider);
+
+      Swal.fire({
+        icon: "success",
+        title: `Usuario creado con exito ${res.message}`,
+        text: "Tu usuario fu creado satisfactoriamente",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No fue posible guardar tu usuario :(!",
+      });
+    }
+    // Guardar datos
+    // generar alerta de guardado o error al guardar
+    // si se guardan los dato limpiar y recetear proceso
+    // si no se guardan precargar todo
   };
 
   const saveDataPayment = (data: IDataPayment) => {
@@ -170,6 +223,20 @@ export const useFormRegisterUser = () => {
   const removedSkilsProviders = (data: IDataSkils, skil: string) => {
     const newSkils = data.values.skills.filter((s) => s !== skil);
     data.setValues({ ...data.values, skills: [...newSkils] });
+  };
+
+  const setDepartamentAndGetCity = async (
+    data: IDataSetDepartament,
+    value: string
+  ) => {
+    data.setValues({
+      ...data.values,
+      departament: value,
+    });
+
+    const cities = await getListCitiesByIdDepartament(value);
+    dispatch(setCities(cities.data));
+    setListCity([{ ID: "0", city: "Selecciona tu ciudad" }, ...cities.data]);
   };
 
   useEffect(() => {
@@ -203,30 +270,28 @@ export const useFormRegisterUser = () => {
   }, [stepDataAddress]);
 
   useEffect(() => {
-    const initSelecion = {
-      ID: "0",
-    };
     setListBank([{ ID: "0", bank: "Selecciona tu banco" }, ...ListBanks]);
     setListBillingModel([
-      { ID: "0", bank:  "Selecciona modelo de facturacion" },
+      { ID: "0", billing_model: "Selecciona modelo de facturacion" },
       ...ListBillingModels,
     ]);
     setListDepartament([
       { ID: "0", departament: "Selecciona tu departamento" },
-      ...listDepartament,
+      ...ListDepartaments,
     ]);
     setListStreetType([
       { ID: "0", street_type: "Selecciona tu tipo de calle" },
       ...ListStreetTypes,
     ]);
     setListAccountType([
-      { ID: "0", account_type: "Selecciona tu tipo de cuenta", },
+      { ID: "0", account_type: "Selecciona tu tipo de cuenta" },
       ...ListTypeAccounts,
     ]);
     setListTypeServices([
-      { ID: "0", service: "Selecciona un tipo de servicio", },
+      { ID: "0", service: "Selecciona un tipo de servicio" },
       ...ListTypeServices,
     ]);
+    setListCity([{ ID: "0", city: "Selecciona tu ciudad" }, ...ListCities]);
   }, [
     ListBanks,
     ListBillingModels,
@@ -234,6 +299,7 @@ export const useFormRegisterUser = () => {
     ListStreetTypes,
     ListTypeAccounts,
     ListTypeServices,
+    ListCities,
   ]);
 
   useEffect(() => {
@@ -254,6 +320,7 @@ export const useFormRegisterUser = () => {
     savePartialDataProviderService,
     saveDataNotifications,
     addSkillsProviderService,
+    setDepartamentAndGetCity,
     setNewSkill,
     removedSkilsProviders,
     saveDataPayment,

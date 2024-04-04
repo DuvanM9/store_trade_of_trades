@@ -108,7 +108,7 @@ export const FormRegisterNotifications = () => {
                   </div>
                 )}
                 <button
-                  className="btn btn-dark mt-4 col-md-8 col-lg-6 mx-auto"
+                  className="btn btn-dark m-4 col-md-8 col-lg-6 mx-auto"
                   style={{ backgroundColor: "#0393ae", borderColor: "#0393ae" }}
                   type="submit"
                   disabled={isSubmitting}

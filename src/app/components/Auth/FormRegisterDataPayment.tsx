@@ -147,8 +147,8 @@ export const FormRegisterDataPayment = () => {
                   onBlur={handleBlur}
                   value={values.bank}
                 >
-                  {listBank.map((bank) => (
-                    <option value={bank.ID}>{bank.bank}</option>
+                  {listBank.map((bank: any, i: number) => (
+                    <option key={i} value={bank.ID}>{bank.bank}</option>
                   ))}
                 </select>
                 <div
@@ -180,8 +180,8 @@ export const FormRegisterDataPayment = () => {
                   onBlur={handleBlur}
                   value={values.account_type}
                 >
-                  {listAccountType.map((account: any) => (
-                    <option value={account.ID}>{account.account_type}</option>
+                  {listAccountType.map((account: any, i:number) => (
+                    <option key={i} value={account.ID}>{account.account_type}</option>
                   ))}
                 </select>
                 <div
@@ -239,7 +239,7 @@ export const FormRegisterDataPayment = () => {
                   </div>
                 )}
                 <button
-                  className="btn btn-dark mt-4 col-md-8 col-lg-6 mx-auto"
+                  className="btn btn-dark m-4 col-md-8 col-lg-6 mx-auto"
                   style={{ backgroundColor: "#0393ae", borderColor: "#0393ae" }}
                   type="submit"
                   disabled={isSubmitting}
