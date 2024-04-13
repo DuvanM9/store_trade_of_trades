@@ -8,6 +8,7 @@ import {
   INotificationsData,
   IProviderServiceData,
   ISaveProviderService,
+  ISaveUser,
   IUserDataBasic,
 } from "../interface/register";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +29,7 @@ import { typeDocument } from "../enum/typeDocument";
 import { getListCitiesByIdDepartament } from "../services/general";
 import { setCities } from "../store/features/general-slice";
 import Swal from "sweetalert2";
-import { saveProviderService } from "../services/auth";
+import { saveProviderService, saveUserService } from "../services/auth";
 
 export const useFormRegisterUser = () => {
   const {
@@ -54,7 +55,7 @@ export const useFormRegisterUser = () => {
       email: "",
       password: "",
       passwordConfirm: "",
-      rol: 3,
+      rol: 4,
     });
 
   const [initialStateProviderServiceData, setInitialStateProviderServiceData] =
@@ -158,16 +159,16 @@ export const useFormRegisterUser = () => {
     const provider: ISaveProviderService = {
       email: stepDataBasic.email,
       password: stepDataBasic.password,
-      rol: stepDataBasic.rol,
+      rol: Number(stepDataBasic.rol),
       typeService: stepDataProviderServive.typeService,
       experience: stepDataProviderServive.experience,
       skills: stepDataProviderServive.skills,
       billing_model: stepDataProviderServive.billing_model,
-      type_notifications: stepDataNotifications.type_notifications,
+      type_notifications: Number(stepDataNotifications.type_notifications),
       media: stepDataNotifications.media,
       full_name: stepDataPayment.full_name,
-      type_document: stepDataPayment.type_document,
-      number_document: stepDataPayment.number_account,
+      type_document: Number(stepDataPayment.type_document),
+      number_document: stepDataPayment.number_document,
       bank: stepDataPayment.bank,
       account_type: stepDataPayment.account_type,
       number_account: stepDataPayment.number_account,
@@ -176,12 +177,66 @@ export const useFormRegisterUser = () => {
       neighborhood: data.neighborhood,
       street_type: data.street_type,
       street: data.street,
-      number: parseInt(data.number),
+      number: Number(data.number),
       phone_contact: data.phone_contact,
       apartment_flat: data.apartment_flat,
       additional_references: data.additional_references,
     };
 
+    const user: ISaveUser = {
+      email: stepDataBasic.email,
+      password: stepDataBasic.password,
+      rol: Number(stepDataBasic.rol),
+      type_notifications: Number(stepDataNotifications.type_notifications),
+      media: stepDataNotifications.media,
+      departament: data.departament,
+      city: data.city,
+      neighborhood: data.neighborhood,
+      street_type: data.street_type,
+      street: data.street,
+      number: Number(data.number),
+      phone_contact: data.phone_contact,
+      apartment_flat: data.apartment_flat,
+      additional_references: data.additional_references,
+    };
+
+    switch (Number(stepDataBasic.rol)) {
+      case Rol.SERVICE_PROVIDER:
+        await saveProvider(provider);
+        break;
+
+      case Rol.USER:
+        await saveUser(user);
+        break;
+
+      default:
+        Swal.fire({
+          icon: "warning",
+          title: `Service no implement`,
+          text: "Aun no ha sido implemntado el servicio",
+        });
+        break;
+    }
+  };
+
+  const saveUser = async (user: ISaveUser) => {
+    try {
+      const res = await saveUserService(user);
+      Swal.fire({
+        icon: "success",
+        title: `Usuario creado con exito ${res.message}`,
+        text: "Tu usuario fu creado satisfactoriamente",
+      });
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+      });
+    }
+  };
+
+  const saveProvider = async (provider: ISaveProviderService) => {
     try {
       const res = await saveProviderService(provider);
 
@@ -190,17 +245,13 @@ export const useFormRegisterUser = () => {
         title: `Usuario creado con exito ${res.message}`,
         text: "Tu usuario fu creado satisfactoriamente",
       });
-    } catch (error) {
+    } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No fue posible guardar tu usuario :(!",
+        text: error.response.data.message,
       });
     }
-    // Guardar datos
-    // generar alerta de guardado o error al guardar
-    // si se guardan los dato limpiar y recetear proceso
-    // si no se guardan precargar todo
   };
 
   const saveDataPayment = (data: IDataPayment) => {
@@ -237,6 +288,7 @@ export const useFormRegisterUser = () => {
     const cities = await getListCitiesByIdDepartament(value);
     dispatch(setCities(cities.data));
     setListCity([{ ID: "0", city: "Selecciona tu ciudad" }, ...cities.data]);
+    setListCategory([])
   };
 
   useEffect(() => {

@@ -2,8 +2,12 @@ import { FormikErrors } from "formik";
 import { Rol } from "../enum/rol";
 import { notifications } from "../enum/notification";
 import { typeDocument } from "../enum/typeDocument";
-import { saveProviderService } from "../services/auth";
+import { IProduct } from "./product";
 
+export interface ILoginDataBasic {
+  email: string;
+  password: string;
+}
 export interface IUserDataBasic {
   email: string;
   password: string;
@@ -87,6 +91,56 @@ export interface ISaveProviderService {
   bank: string;
   account_type: string;
   number_account: string;
+  departament: string;
+  city: string;
+  neighborhood: string;
+  street_type: string;
+  street: string;
+  number: number;
+  phone_contact: string;
+  apartment_flat?: string;
+  additional_references?: string;
+}
+
+export interface ISaveTrade {
+  email: string;
+  password: string;
+  rol: number;
+  type_notifications: number;
+  media: string;
+  name_comerce: string;
+  description_comerce: string;
+  category_comerce: string;
+  starting_time: Date;
+  clousing_time: Date;
+  nit: number;
+  vc: number;
+  rut: string;
+  full_name: string;
+  type_document: number;
+  number_document: string;
+  bank: string;
+  account_type: string;
+  number_account: string;
+  departament: string;
+  city: string;
+  neighborhood: string;
+  street_type: string;
+  street: string;
+  number: number;
+  phone_contact: string;
+  products: IProduct[];
+  apartment_flat?: string;
+  additional_references?: string;
+}
+
+
+export interface ISaveUser {
+  email: string;
+  password: string;
+  rol: number;
+  type_notifications: number;
+  media: string;
   departament: string;
   city: string;
   neighborhood: string;

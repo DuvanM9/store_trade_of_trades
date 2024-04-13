@@ -10,6 +10,14 @@ import { Rol } from "../enum/rol";
 
 export const routes: IRoute[] = [
   {
+    to: "product-list",
+    path: "product-list",
+    Component: PageListProducts,
+    name: "Productos",
+    isActiveNav: true,
+    rol: [Rol.USER, Rol.SERVICE_PROVIDER, Rol.TRADE],
+  },
+  {
     to: "my-orders",
     path: "my-orders",
     Component: PageMayOrder,
@@ -33,14 +41,7 @@ export const routes: IRoute[] = [
     isActiveNav: true,
     rol: [Rol.USER, Rol.SERVICE_PROVIDER, Rol.TRADE],
   },
-  {
-    to: "product-list",
-    path: "product-list",
-    Component: PageListProducts,
-    name: "Productos",
-    isActiveNav: true,
-    rol: [Rol.USER, Rol.SERVICE_PROVIDER, Rol.TRADE],
-  },
+
   {
     to: "product-detail",
     path: "product-detail/:product",

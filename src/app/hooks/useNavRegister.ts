@@ -5,16 +5,16 @@ import { IStore } from "../interface/store";
 import { IRoute } from "../interface/route";
 import { getListGeneral } from "../services/general";
 import { setDataGeneral } from "../store/features/general-slice";
+import { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 
 export const useNavRegister = () => {
   const { stepDataBasic } = useSelector((state: IStore) => state.data_register);
   const [dataStep, setdataStep] = useState<IRoute[]>([]);
   const dispatch = useDispatch();
 
-  const getGeneralData = async () => {
+  const getGeneralData = async (dispatch: Dispatch<UnknownAction>) => {
     try {
       const response = await getListGeneral();
-      console.log(response);
       dispatch(
         setDataGeneral({
           ListBanks: response.data.ListBanks,
@@ -41,8 +41,8 @@ export const useNavRegister = () => {
   };
 
   useEffect(() => {
-    getGeneralData();
-  }, []);
+    getGeneralData(dispatch);
+  }, [dispatch]);
 
   useEffect(() => {
     const stepsByRol = CreateRoutesByRol(Number(stepDataBasic.rol));

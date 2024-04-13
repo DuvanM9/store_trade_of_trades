@@ -5,8 +5,11 @@ import { Rol } from "../../enum/rol";
 import { useFormRegisterUser } from "../../hooks/useFormRegisterUser";
 
 export const FormRegisterUser = () => {
-  const { savePartialDataStepOne, initialStateBasicData, keyReconstructFragment } =
-    useFormRegisterUser();
+  const {
+    savePartialDataStepOne,
+    initialStateBasicData,
+    keyReconstructFragment,
+  } = useFormRegisterUser();
   return (
     <React.Fragment key={keyReconstructFragment}>
       <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
@@ -19,7 +22,7 @@ export const FormRegisterUser = () => {
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             setSubmitting(false);
             savePartialDataStepOne(values);
-            resetForm()
+            resetForm();
           }}
         >
           {({
@@ -30,7 +33,6 @@ export const FormRegisterUser = () => {
             handleBlur,
             handleSubmit,
             isSubmitting,
-            /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit} className="w-100">
               <div className="mb-3 col-md-8 col-lg-6 mx-auto">
@@ -122,7 +124,6 @@ export const FormRegisterUser = () => {
                   }`}
                   aria-label="Default select example"
                   id="rol"
-                  // type="sex"
                   name="rol"
                   onChange={handleChange}
                   onBlur={handleBlur}

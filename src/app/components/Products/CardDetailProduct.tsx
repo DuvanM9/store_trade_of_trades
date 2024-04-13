@@ -1,11 +1,10 @@
-import { useParams } from "react-router-dom"
-
+import { useParams } from "react-router-dom";
 
 export const CardDetailProduct = () => {
+  const params = useParams();
 
-    const params = useParams()
+  //TODO: TARJETA CON DETALLES DE PRODUCTO
+  //TODO: FUNCIONES : AGREGAR AL CARRITO, COMPRAR, PREGUNTAR
 
-  return (
-    <div>{params.product}</div>
-  )
-}
+  return <div>{params.product}</div>;
+};

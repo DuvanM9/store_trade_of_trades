@@ -8,50 +8,49 @@ const createDataPaymentSchema = Yup.object().shape({
     .max(30, "El nombre debe tener máximo 10 caracteres"),
 
   type_document: Yup.number().required("El tipo de documento es requerido"),
-  number_document: Yup.number()
+  number_document: Yup.string()
     .typeError("El número de documento debe ser numérico")
-    .integer("El número de documento debe ser un número entero")
     .when("type_document", ([type_document], sch) => {
       switch (type_document) {
         case typeDocument.CC:
           return sch
             .min(
-              1000000,
+              8,
               "El número de documento debe tener al menos 8 dígitos"
             )
             .max(
-              9999999999,
+              10,
               "El número de documento no puede tener más de 10 dígitos"
             );
         case typeDocument.TI:
           return sch
             .min(
-              1000000,
+              8,
               "El número de documento debe tener al menos 8 dígitos"
             )
             .max(
-              9999999999,
+              10,
               "El número de documento no puede tener más de 10 dígitos"
             );
         case typeDocument.CE:
           return sch
             .min(
-              9999999999,
+              10,
               "El número de documento debe tener al menos 10 dígitos"
             )
             .max(
-              9999999999,
+              10,
               "El número de documento no puede tener más de 10 dígitos"
             );
 
         default:
           return sch
             .min(
-              1000000,
+              8,
               "El número de documento debe tener al menos 8 dígitos"
             )
             .max(
-              9999999999,
+              10,
               "El número de documento no puede tener más de 10 dígitos"
             );
       }

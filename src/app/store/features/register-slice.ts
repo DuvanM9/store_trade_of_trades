@@ -24,7 +24,7 @@ const initialState: IDataRegister = {
     email: "",
     password: "",
     passwordConfirm: "",
-    rol: 3,
+    rol: 4,
   },
   stepDataProviderServive: {
     typeService: "0",

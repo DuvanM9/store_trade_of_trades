@@ -60,8 +60,8 @@ export const FormRegisterProviderService = () => {
                   onBlur={handleBlur}
                   value={values.typeService}
                 >
-                  {listTypeServices.map((ser, i) => (
-                    <option key={i} value={ser.id}>
+                  {listTypeServices.map((ser:any, i:number) => (
+                    <option key={i} value={ser.ID}>
                       {ser.service}
                     </option>
                   ))}
@@ -97,8 +97,8 @@ export const FormRegisterProviderService = () => {
                   onBlur={handleBlur}
                   value={values.billing_model}
                 >
-                  {listBillingModel.map((bil, i) => (
-                    <option key={i} value={bil.id}>
+                  {listBillingModel.map((bil:any, i:number) => (
+                    <option key={i} value={bil.ID}>
                       {bil.billing_model}
                     </option>
                   ))}

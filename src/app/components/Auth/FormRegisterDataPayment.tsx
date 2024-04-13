@@ -112,7 +112,7 @@ export const FormRegisterDataPayment = () => {
                       : ""
                   }`}
                   id="number_document"
-                  type="number"
+                  type="text"
                   name="number_document"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -209,7 +209,7 @@ export const FormRegisterDataPayment = () => {
                       : ""
                   }`}
                   id="number_account"
-                  type="number"
+                  type="text"
                   name="number_account"
                   onChange={handleChange}
                   onBlur={handleBlur}
